@@ -23,4 +23,13 @@ public class SpringFXMLLoader {
         InputStream fxmlStream = getClass().getResourceAsStream(fxmlPath);
         return loader.load(fxmlStream);
     }
+
+    // Returns the FXMLLoader instance after loading
+    public FXMLLoader loadWithController(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setControllerFactory(context::getBean);
+        InputStream fxmlStream = getClass().getResourceAsStream(fxmlPath);
+        loader.load(fxmlStream); // Load the FXML
+        return loader;
+    }
 }

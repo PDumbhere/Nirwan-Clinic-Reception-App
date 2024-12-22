@@ -34,15 +34,16 @@ public class MainController {
 
     public void loadGreeting() {
         try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/greet"))
-                    .GET()
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            greetingLabel.setText(response.body());
+//            HttpClient client = HttpClient.newHttpClient();
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(URI.create("http://localhost:8080/api/greet"))
+//                    .GET()
+//                    .build();
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//            greetingLabel.setText(response.body());
             greetingLabel.setTextFill(Paint.valueOf("green"));
             greetingLabel.setWrapText(true);
+            greetingLabel.setText("Loooooooooooooong Hello from Backend! What's upppppppppppppppppp bro");
         } catch (Exception e) {
             greetingLabel.setText("Error fetching greeting!");
             e.printStackTrace();
@@ -52,7 +53,7 @@ public class MainController {
     public void switchToPatientData() throws Exception{
         // load the patient data FXML file
         SpringFXMLLoader loader = JavaFxApplication.springContext.getBean(SpringFXMLLoader.class);
-        Scene scene = new Scene((Parent) loader.load("/patientList.fxml"),800,500);
+        Scene scene = new Scene((Parent) loader.load("/patientList.fxml"),1000,600);
 
         // Get the current stage and set the new scene
         Stage stage = (Stage) patientDataLink.getScene().getWindow();
@@ -61,10 +62,15 @@ public class MainController {
 
     public void switchToPatientRegistration() throws Exception{
         SpringFXMLLoader loader = JavaFxApplication.springContext.getBean(SpringFXMLLoader.class);
-        Scene scene = new Scene((Parent) loader.load("/patientRegistration.fxml"),800,500);
+        FXMLLoader fxmlLoader = loader.loadWithController("/patientRegistration.fxml");
 
         // Get the current stage and set the new scene
-        Stage stage = (Stage) patientRegistrationLink.getScene().getWindow();
+        Parent root = fxmlLoader.getRoot();
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setTitle("Register New Patient");
+        stage.showAndWait();
+
     }
 }

@@ -33,6 +33,9 @@ public class PatientRegistrationController {
     private Hyperlink returnToPatientData;
 
     @FXML
+    private TextField patientIdField;
+
+    @FXML
     private TextField patientNameField;
 
     @FXML
@@ -40,6 +43,18 @@ public class PatientRegistrationController {
 
     @FXML
     private ComboBox<String> genderComboBox;
+
+    @FXML
+    private ToggleGroup genderToggleGroup;
+
+    @FXML
+    private RadioButton otherRadioButton;
+
+    @FXML
+    private RadioButton maleRadioButton;
+
+    @FXML
+    private RadioButton femaleRadioButton;
 
     @FXML
     private ComboBox<String> patientTypeComboBox;
@@ -56,10 +71,13 @@ public class PatientRegistrationController {
     @FXML
     public void handleSave() {
         try {
+            String patientId = patientIdField.getText();
+            System.out.println(patientId);
             String name = patientNameField.getText();
             LocalDate dob = dobField.getValue();
-            Sex gender = genderComboBox.getValue().equalsIgnoreCase("other")?Sex.OTHER:
-                    genderComboBox.getValue().equalsIgnoreCase("male")?Sex.MALE:Sex.FEMALE;
+            String sex = (String) genderToggleGroup.getSelectedToggle().getUserData();
+            Sex gender = sex.equalsIgnoreCase("other")?Sex.OTHER:
+                    sex.equalsIgnoreCase("male")?Sex.MALE:Sex.FEMALE;
             String patientType = patientTypeComboBox.getValue();
             String treatment = treatmentField.getText();
             String contact = contactField.getText();
@@ -73,6 +91,9 @@ public class PatientRegistrationController {
 
             // Create and save patient entity
             Patient patient = new Patient();
+            if(!patientId.isEmpty()){
+                patient.setPatientId(Long.valueOf(patientId));
+            }
             patient.setName(name);
             patient.setDob(dob.atStartOfDay()); // Convert LocalDate to LocalDateTime
             patient.setSex(gender);
@@ -85,7 +106,8 @@ public class PatientRegistrationController {
             showAlert("Success", "Patient registered successfully!");
 
             // Clear fields after saving
-            clearForm();
+            Stage currentStage = (Stage) patientNameField.getScene().getWindow();
+            currentStage.close();
         } catch (Exception e) {
             showAlert("Error", "An error occurred while saving patient data: " + e.getMessage());
         }
@@ -94,6 +116,7 @@ public class PatientRegistrationController {
     private void clearForm() {
         patientNameField.clear();
         dobField.setValue(null);
+        otherRadioButton.setSelected(true);
         genderComboBox.setValue(null);
         patientTypeComboBox.setValue(null);
         treatmentField.clear();
@@ -131,6 +154,27 @@ public class PatientRegistrationController {
         // Get the current stage and set the new scene
         Stage stage = (Stage) returnToPatientData.getScene().getWindow();
         stage.setScene(scene);
+    }
+
+    public void setPatientData(Patient patient){
+        patientIdField.setText(String.valueOf(patient.getPatientId()));
+        patientNameField.setText(patient.getName());
+        dobField.setValue(patient.getDob().toLocalDate());
+//        genderComboBox.setValue(patient.getSex().toString());
+        switch (patient.getSex().toString().toLowerCase()){
+            case("other"):
+                otherRadioButton.setSelected(true);
+                break;
+            case("male"):
+                maleRadioButton.setSelected(true);
+                break;
+            case("female"):
+                femaleRadioButton.setSelected(true);
+        }
+        patientTypeComboBox.setValue(patient.getPatientType());
+        treatmentField.setText(patient.getTreatment());
+        contactField.setText(String.valueOf(patient.getPhone()));
+        addressField.setText(patient.getAddress());
     }
 }
 

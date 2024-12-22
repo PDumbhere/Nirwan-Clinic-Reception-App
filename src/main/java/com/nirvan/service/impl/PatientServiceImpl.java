@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -25,6 +26,21 @@ public class PatientServiceImpl implements PatientService {
             throw new RuntimeException("Please fill all the mandatory fields");
         }
         return patientRepository.save(patient);
+    }
+
+    @Override
+    public boolean deletePatient(Long patientId) {
+        Optional<Patient> patient = patientRepository.findById(patientId);
+        if(!patient.isPresent())
+            return false;
+
+        patientRepository.deleteById(patientId);
+        return true;
+    }
+
+    @Override
+    public List<Patient> searchByName(String name) {
+        return patientRepository.searchName(name);
     }
 
     private boolean verifyPatientEntry(Patient patient){

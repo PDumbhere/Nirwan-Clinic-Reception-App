@@ -7,10 +7,10 @@
 <?import javafx.collections.FXCollections?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.nirvan.controller.PatientRegistrationController">
     <left>
-        <VBox>
-            <Hyperlink text="Back To Main Window" onAction="#switchToMain" fx:id="returnToMainLink"/>
-            <Hyperlink text="All Patient Data" onAction="#switchPatientData" fx:id="returnToPatientData"/>
-        </VBox>
+<!--        <VBox>-->
+<!--            <Hyperlink text="Back To Main Window" onAction="#switchToMain" fx:id="returnToMainLink"/>-->
+<!--            <Hyperlink text="All Patient Data" onAction="#switchPatientData" fx:id="returnToPatientData"/>-->
+<!--        </VBox>-->
     </left>
     <center>
         <AnchorPane>
@@ -23,7 +23,8 @@
 
                     <!-- Title -->
                     <Label text="Patient Registration Form" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-
+                    <!-- Patient Id -->
+                    <TextField fx:id="patientIdField" visible="false" managed="false"/>
                     <!-- Patient Name -->
                     <HBox spacing="10">
                         <Label text="Patient Name:" minWidth="120" />
@@ -33,27 +34,33 @@
                     <!-- Date of Birth -->
                     <HBox spacing="10">
                         <Label text="Date of Birth:" minWidth="120" />
-                        <DatePicker fx:id="dobField" promptText="Select date of birth" />
+                        <DatePicker fx:id="dobField" promptText="Select date of birth"/>
                     </HBox>
 
                     <!-- Gender -->
+                    <fx:define>
+                        <ToggleGroup fx:id="genderToggleGroup"/>
+                    </fx:define>
                     <HBox spacing="10">
                         <Label text="Gender:" minWidth="120" />
-                        <ComboBox fx:id="genderComboBox" promptText="Select gender">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Male" />
-                                    <String fx:value="Female" />
-                                    <String fx:value="Other" />
-                                </FXCollections>
-                            </items>
-                        </ComboBox>
+                        <RadioButton fx:id="otherRadioButton" text="Other" userData="Other" toggleGroup="$genderToggleGroup" selected="true"/>
+                        <RadioButton fx:id="maleRadioButton" text="Male" userData="Male" toggleGroup="$genderToggleGroup" />
+                        <RadioButton fx:id="femaleRadioButton" text="Female" userData="Female" toggleGroup="$genderToggleGroup"/>
+<!--                        <ComboBox fx:id="genderComboBox" promptText="Select gender" value="Other">-->
+<!--                            <items>-->
+<!--                                <FXCollections fx:factory="observableArrayList">-->
+<!--                                    <String fx:value="Male" />-->
+<!--                                    <String fx:value="Female" />-->
+<!--                                    <String fx:value="Other" />-->
+<!--                                </FXCollections>-->
+<!--                            </items>-->
+<!--                        </ComboBox>-->
                     </HBox>
 
                     <!-- Patient Type -->
                     <HBox spacing="10">
                         <Label text="Patient Type:" minWidth="120" />
-                        <ComboBox fx:id="patientTypeComboBox" promptText="Select type">
+                        <ComboBox fx:id="patientTypeComboBox" promptText="Select type" value="New">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="New" />

@@ -9,4 +9,8 @@ public interface PatientService {
     List<Patient> getAllPatients();
 
     Patient savePatient(Patient patient);
+
+    boolean deletePatient(Long patientId);
+
+    List<Patient> searchByName(String name);
 }

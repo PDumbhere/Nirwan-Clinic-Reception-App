@@ -36,4 +36,11 @@ public class Patient {
     private Long phone;
     private String address;
 
+    private LocalDateTime registrationDateTime;
+
+    @PrePersist
+    private void onSave(){
+        registrationDateTime = LocalDateTime.now();
+    }
+
 }

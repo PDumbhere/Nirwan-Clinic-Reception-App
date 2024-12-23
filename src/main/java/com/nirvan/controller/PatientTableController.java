@@ -5,8 +5,8 @@ import com.nirvan.config.SpringFXMLLoader;
 import com.nirvan.constants.Sex;
 import com.nirvan.entity.Patient;
 import com.nirvan.service.PatientService;
+import com.nirvan.service.impl.ExcelService;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,10 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -214,6 +216,27 @@ public class PatientTableController {
         patientData.clear();
         patientData.addAll(patientService.getAllPatients());
         searchNameField.setText("");
+    }
+
+    @FXML
+    public void handleExportToExcel() {
+        try {
+            // Open file chooser to select save location
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Excel File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                List<Patient> patients = patientService.getAllPatients();
+                ExcelService exporter = new ExcelService();
+                exporter.exportPatientsToExcel(patients, file.getAbsolutePath());
+                showAlert("Export Successful","Patients data exported successfully");
+                System.out.println("Export successful: " + file.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

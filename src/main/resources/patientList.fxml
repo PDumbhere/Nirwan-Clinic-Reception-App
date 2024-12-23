@@ -107,17 +107,30 @@
                         </TableColumn>
                     </columns>
                 </TableView>
-                <Button onAction="#refreshTable" BorderPane.alignment="TOP_CENTER">
-                    <BorderPane.margin>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
-                    </BorderPane.margin>
+                <HBox>
+                    <Button onAction="#refreshTable" BorderPane.alignment="TOP_CENTER">
+                        <BorderPane.margin>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </BorderPane.margin>
 
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/toolbarButtonGraphics/general/Refresh24.gif"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
+                        <graphic>
+                            <ImageView>
+                                <Image url="@/toolbarButtonGraphics/general/Refresh24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button text="Export to Excel" onAction="#handleExportToExcel">
+                        <BorderPane.margin>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </BorderPane.margin>
+
+                        <graphic>
+                            <ImageView>
+                                <Image url="@/toolbarButtonGraphics/general/Export24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
             </FlowPane>
 
 

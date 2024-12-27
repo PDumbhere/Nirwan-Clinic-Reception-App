@@ -1,0 +1,16 @@
+.button{
+    -fx-background-color: blue;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight : bold;
+}
+.button:hover{
+    -fx-background-color: rgb(0, 0, 139);
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight : bold;
+}
+.button:pressed{
+    -fx-background-color: rgb(0, 0, 139);
+    -fx-background-radius: 5px;
+    -fx-text-fill: rgb(0,0,0);
+    -fx-font-weight : bold;
+}

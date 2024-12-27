@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nirvan.controller.FilterDialogController"
+          hgap="10" vgap="10" orientation="VERTICAL" stylesheets="css/filterDialog.css">
+    <padding>
+        <Insets top="10" bottom="10" right="10" left="10" />
+    </padding>
+    <ComboBox fx:id="patientTypeComboBox" promptText="Select Patient Type" prefWidth="280">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="New" />
+                <String fx:value="Old" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <ComboBox fx:id="treatmentComboBox" promptText="Select Treatment" prefWidth="280">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Consultation"/>
+                <String fx:value="Root Canal"/>
+                <String fx:value="Crown"/>
+                <String fx:value="Implant"/>
+                <String fx:value="Scaling"/>
+                <String fx:value="Ortho"/>
+                <String fx:value="Extraction"/>
+                <String fx:value="Other"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="Apply" fx:id="applyButton" onAction="#applyFilter" />
+    </HBox>
+</FlowPane>

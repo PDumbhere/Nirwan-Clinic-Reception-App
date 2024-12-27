@@ -1,0 +1,47 @@
+.root {
+    -fx-background-image: url('/image/Nirwan-Dental-Clinic.jpg'); /* Correct image path */
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+.overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black overlay */
+    -fx-opacity: 0.6; /* Adjust opacity to control visibility */
+}
+.center {
+    -fx-background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background for the content */
+    -fx-background-radius: 10px; /* Optional: rounded corners for the content box */
+}
+
+.lable{
+    -fx-font-family: 'Times New Roman';
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-padding: 20px 0px;
+
+}
+
+.hbox {
+    -fx-spacing: 10px; /* Adds 10px of space between the buttons */
+}
+.button{
+    -fx-background-color: blue;
+    -fx-background-radius: 5px;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-padding: 10px 20px;
+    -fx-font-weight : bold;
+    -fx-font-size: 16px;
+    -fx-indent :10px;
+}
+.button:hover{
+    -fx-background-color: rgb(0, 0, 139);
+    -fx-background-radius: 5px;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight : bold;
+}
+.button:pressed{
+    -fx-background-color: rgb(0, 0, 139);
+    -fx-background-radius: 5px;
+    -fx-text-fill: rgb(0,0,0);
+    -fx-font-weight : bold;
+}

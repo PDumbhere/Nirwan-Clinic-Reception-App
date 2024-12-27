@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
@@ -27,10 +28,10 @@ public class MainController {
     private Label greetingLabel;
 
     @FXML
-    private Hyperlink patientDataLink;
+    private Button patientDataLink;
 
     @FXML
-    private Hyperlink patientRegistrationLink;
+    private Button patientRegistrationLink;
 
     public void loadGreeting() {
         try {

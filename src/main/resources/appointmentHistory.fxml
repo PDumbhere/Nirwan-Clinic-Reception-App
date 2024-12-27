@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.nirvan.controller.AppointmentHistoryController"
+            prefHeight="400.0" prefWidth="600.0">
+    <top>
+        <Label text="Appointment History" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="10" bottom="10"/>
+            </padding>
+            <font>
+                <Font size="30" name="Times New Roman bold"/>
+            </font>
+        </Label>
+    </top>
+    <left>
+        <GridPane hgap="10" vgap="5">
+            <padding>
+                <Insets left="10" top="10" right="10" bottom="10"/>
+            </padding>
+            <Label text="Patient Id:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <Label fx:id="patientId" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Patient Name:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <Label fx:id="name" GridPane.rowIndex="1" GridPane.columnIndex="1" wrapText="true" prefWidth="100"/>
+
+            <Label text="Date of Birth:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <Label fx:id="dob" GridPane.rowIndex="2" GridPane.columnIndex="1" wrapText="true" prefWidth="100"/>
+
+            <Label text="Gender:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <Label fx:id="sex" GridPane.rowIndex="3" GridPane.columnIndex="1" wrapText="true" prefWidth="100"/>
+
+            <Label text="Patient Type:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <Label fx:id="patientType" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+            <Label text="Phone No.:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <Label fx:id="phone" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <Label text="Address:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <Label fx:id="address" GridPane.rowIndex="6" GridPane.columnIndex="1" wrapText="true" prefWidth="100"/>
+
+            <Label text="Registered On:" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <Label fx:id="registrationDate" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+        </GridPane>
+    </left>
+    <center>
+        <VBox>
+            <padding>
+                <Insets left="10" top="10" right="10" bottom="10"/>
+            </padding>
+
+            <TitledPane fx:id="titledPane" text="Add Appointment" expanded="false">
+                <GridPane hgap="10" vgap="10">
+                    <!-- Title -->
+    <!--                <Label text="Add Appointment" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="3" />-->
+
+                    <!-- Treatment ComboBox -->
+                    <Label text="Treatment:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="treatment" promptText="Select a treatment" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Consultation"/>
+                                <String fx:value="Root Canal"/>
+                                <String fx:value="Crown"/>
+                                <String fx:value="Implant"/>
+                                <String fx:value="Scaling"/>
+                                <String fx:value="Ortho"/>
+                                <String fx:value="Extraction"/>
+                                <String fx:value="Other"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+
+                    <!-- Appointment Date -->
+                    <Label text="Appointment Date:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                    <DatePicker fx:id="appointmentDate" promptText="Select Appointment Date" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                    <!-- Appointment Time -->
+                    <Label text="Appointment Time:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="appointmentTime" promptText="Select Appointment Time" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                    <!-- Save Button -->
+                    <Button text="Save Appointment" onAction="#handleSaveAppointment" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="3" />
+                </GridPane>
+            </TitledPane>
+            <TableView fx:id="appointmentTable" prefWidth="300">
+                <columns>
+                    <TableColumn fx:id="dateColumn" text="Date">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="date"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="timeColumn" text="Time">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="time"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="treatmentColumn" text="Treatment">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="treatment"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>

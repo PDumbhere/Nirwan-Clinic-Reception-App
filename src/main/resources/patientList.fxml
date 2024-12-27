@@ -8,31 +8,34 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.nirvan.controller.PatientTableController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.nirvan.controller.PatientTableController"
+            stylesheets="css/patientList.css">
     <top>
-
-        <Label alignment="CENTER" BorderPane.alignment="CENTER"  text="Patient List" textAlignment="CENTER" >
-            <padding>
-                <Insets top="10" bottom="10"/>
-            </padding>
-            <font>
-                <Font name="Times New Roman Bold" size="24" />
-            </font>
-        </Label>
+        <HBox styleClass="top" alignment="CENTER">
+            <Label alignment="CENTER" BorderPane.alignment="CENTER"  text="Patient List" textAlignment="CENTER"
+                styleClass="lable">
+                <padding>
+                    <Insets top="10" bottom="10"/>
+                </padding>
+            </Label>
+        </HBox>
 
     </top>
     <left>
-        <VBox>
+        <VBox styleClass="left">
             <padding>
                 <Insets left="10" right="10"/>
             </padding>
-            <Hyperlink fx:id="returnToMainLink" onAction="#switchToMain" text="Back To Main Window" />
-            <Hyperlink fx:id="patientRegistrationLink" onAction="#switchToPatientRegistration" text="Register New Patient" />
+
+            <!-- Manually assign style classes -->
+            <Hyperlink fx:id="returnToMainLink" styleClass="odd" onAction="#switchToMain" text="Back To Main Window" />
+            <Hyperlink fx:id="patientRegistrationLink" styleClass="even" onAction="#switchToPatientRegistration" text="Register New Patient" />
+
         </VBox>
     </left>
     <center>
 
-            <FlowPane orientation="VERTICAL" prefHeight="500">
+            <FlowPane styleClass="center" orientation="VERTICAL" prefHeight="500">
                 <padding>
                     <Insets bottom="10" top="10" />
                 </padding>
@@ -45,8 +48,10 @@
                         <Button onAction="#handleUpdate" text="Update" />
                         <Button alignment="CENTER_RIGHT" onAction="#handleDelete" text="Delete" />
                     </HBox>
-                    <Region prefWidth="350" />
+                    <Region prefWidth="340" />
+
                     <HBox spacing="5.0">
+                        <Button text="Filter" onAction="#showFilterDialog"/>
                         <TextField fx:id="searchNameField" promptText="Enter Patient Name to Search" onKeyReleased="#handleSearch" />
                         <Button text="Search" onAction="#handleSearch">
                             <graphic>
@@ -57,7 +62,7 @@
                         </Button>
                     </HBox>
                 </FlowPane>
-                <TableView fx:id="patientTable" prefWidth="760">
+                <TableView fx:id="patientTable" prefWidth="760" >
                     <!-- Table Columns -->
                     <columns>
                         <TableColumn fx:id="idColumn" text="ID">
@@ -107,7 +112,7 @@
                         </TableColumn>
                     </columns>
                 </TableView>
-                <HBox>
+                <HBox styleClass="bottomButton" spacing="10">
                     <Button onAction="#refreshTable" BorderPane.alignment="TOP_CENTER">
                         <BorderPane.margin>
                             <Insets top="10" right="10" bottom="10" left="10"/>
@@ -127,6 +132,17 @@
                         <graphic>
                             <ImageView>
                                 <Image url="@/toolbarButtonGraphics/general/Export24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button text="Import from Excel" onAction="#handleImportFromExcel">
+                        <BorderPane.margin>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </BorderPane.margin>
+
+                        <graphic>
+                            <ImageView>
+                                <Image url="@/toolbarButtonGraphics/general/Import24.gif"/>
                             </ImageView>
                         </graphic>
                     </Button>

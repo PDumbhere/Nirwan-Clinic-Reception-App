@@ -13,4 +13,6 @@ public interface PatientService {
     boolean deletePatient(Long patientId);
 
     List<Patient> searchByName(String name);
+
+    boolean importPatientsFromExcel(List<Patient> patients);
 }

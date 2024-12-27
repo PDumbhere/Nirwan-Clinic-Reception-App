@@ -1,0 +1,79 @@
+.root {
+    -fx-background-image: url('/image/Nirwan-Dental-Clinic.jpg'); /* Correct image path */
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+.overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black overlay */
+    -fx-opacity: 0.6; /* Adjust opacity to control visibility */
+}
+.center {
+    -fx-background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background for the content */
+    -fx-padding: 10px 0px 0px 20px;
+}
+.left{
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for the content */
+}
+.top{
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for the content */
+}
+
+.lable{
+    -fx-font-family: 'Times New Roman';
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-padding: 20px 0px;
+    -fx-text-fill: rgba(255, 255, 255, 1)
+}
+
+.hbox {
+    -fx-spacing: 10px; /* Adds 10px of space between the buttons */
+}
+.button{
+    -fx-background-color: blue;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight : bold;
+}
+.button:hover{
+    -fx-background-color: rgb(0, 0, 139);
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight : bold;
+}
+.button:pressed{
+    -fx-background-color: rgb(0, 0, 139);
+    -fx-background-radius: 5px;
+    -fx-text-fill: rgb(0,0,0);
+    -fx-font-weight : bold;
+}
+
+.bottomButton{
+    spacing:10px;
+    padding:10px 0px;
+}
+
+/* Style for VBox container */
+
+/* Background colors for odd and even children */
+.odd {
+    -fx-background-color: #f2f2f2; /* Light shade for odd elements */
+}
+
+.even {
+    -fx-background-color: #dcdcdc; /* Darker shade for even elements */
+}
+
+/* Style for Hyperlinks */
+.left .hyperlink {
+    -fx-pref-width: 150px; /* Make hyperlink expand to full width */
+    -fx-alignment: CENTER; /* Center the text inside the hyperlink */
+    -fx-font-size: 14px; /* Adjust the font size */
+    -fx-text-fill: #333; /* Set the text color */
+    -fx-padding: 10px 0px; /* Add padding around the hyperlink */
+}
+
+/* Optional: Add hover effect */
+.left .hyperlink:hover {
+    -fx-background-color: #a5a5a5; /* Change color on hover */
+    -fx-text-fill: white; /* White text on hover */
+}

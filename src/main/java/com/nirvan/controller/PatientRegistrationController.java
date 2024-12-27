@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Controller
@@ -42,9 +43,6 @@ public class PatientRegistrationController {
     private DatePicker dobField;
 
     @FXML
-    private ComboBox<String> genderComboBox;
-
-    @FXML
     private ToggleGroup genderToggleGroup;
 
     @FXML
@@ -60,13 +58,21 @@ public class PatientRegistrationController {
     private ComboBox<String> patientTypeComboBox;
 
     @FXML
-    private TextField treatmentField;
+    private ComboBox<String> treatmentField;
 
     @FXML
     private TextField contactField;
 
     @FXML
     private TextField addressField;
+
+    @FXML
+    public TextField registeredDateTime;
+
+    public void initialize(){
+        dobField.setValue(LocalDate.of(2000,1,1));
+    }
+
 
     @FXML
     public void handleSave() {
@@ -79,9 +85,10 @@ public class PatientRegistrationController {
             Sex gender = sex.equalsIgnoreCase("other")?Sex.OTHER:
                     sex.equalsIgnoreCase("male")?Sex.MALE:Sex.FEMALE;
             String patientType = patientTypeComboBox.getValue();
-            String treatment = treatmentField.getText();
+            String treatment = treatmentField.getValue();
             String contact = contactField.getText();
             String address = addressField.getText();
+            String registrationDate = registeredDateTime.getText();
 
             // Validation (Basic)
             if (name == null || dob == null || gender == null || patientType == null || contact == null || contact.length() != 10) {
@@ -101,6 +108,10 @@ public class PatientRegistrationController {
             patient.setTreatment(treatment);
             patient.setPhone(Long.valueOf(contact));
             patient.setAddress(address);
+            if(!registrationDate.isEmpty()){
+                patient.setRegistrationDateTime(LocalDateTime.parse(registrationDate));
+            }
+
 
             patientService.savePatient(patient);
             showAlert("Success", "Patient registered successfully!");
@@ -117,9 +128,8 @@ public class PatientRegistrationController {
         patientNameField.clear();
         dobField.setValue(null);
         otherRadioButton.setSelected(true);
-        genderComboBox.setValue(null);
         patientTypeComboBox.setValue(null);
-        treatmentField.clear();
+        treatmentField.setValue("Consultation");
         contactField.clear();
         addressField.clear();
     }
@@ -172,9 +182,10 @@ public class PatientRegistrationController {
                 femaleRadioButton.setSelected(true);
         }
         patientTypeComboBox.setValue(patient.getPatientType());
-        treatmentField.setText(patient.getTreatment());
+        treatmentField.setValue(patient.getTreatment());
         contactField.setText(String.valueOf(patient.getPhone()));
         addressField.setText(patient.getAddress());
+        registeredDateTime.setText(String.valueOf(patient.getRegistrationDateTime()));
     }
 }
 

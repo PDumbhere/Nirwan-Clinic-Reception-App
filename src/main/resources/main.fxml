@@ -6,54 +6,24 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.text.Font?>
-<!--<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.nirvan.controller.MainController">-->
-<!--    <children>-->
-<!--        <Label fx:id="greetingLabel" layoutX="50" layoutY="50" text="Click to Load Greeting!" textFill="blue" wrapText="true">-->
-<!--            <font>-->
-<!--                <Font name="Arial italic" size ="12"/>-->
-<!--            </font>-->
-<!--            <graphic>-->
-<!--                <ImageView>-->
-<!--                    <Image url="@/toolbarButtonGraphics/general/Information24.gif"/>-->
-<!--                </ImageView>-->
-<!--            </graphic>-->
-<!--        </Label>-->
-<!--        <Button layoutX="50" layoutY="100" text="Load Greeting" onAction="#loadGreeting" >-->
-<!--            <graphic>-->
-<!--                <ImageView>-->
-<!--                    <Image url="@/toolbarButtonGraphics/general/Refresh24.gif"/>-->
-<!--                </ImageView>-->
-<!--            </graphic>-->
-<!--        </Button>-->
-<!--    </children>-->
-<!--</AnchorPane>-->
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import java.time.LocalDateTime?>
+
 <?import javafx.geometry.Insets?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.nirvan.controller.MainController">
-    <top>
-        <Label text="Welcome to Nirvan Dental Clinic" BorderPane.alignment="CENTER">
-            <BorderPane.margin>
-                <Insets right="10" left="10"/>
-            </BorderPane.margin>
-            <font>
-                <Font name="Times New Roman Bold" size="24"/>
-            </font>
-        </Label>
-    </top>
-    <left>
-        <VBox BorderPane.alignment="CENTER" alignment="CENTER_LEFT">
-            <BorderPane.margin>
-                <Insets right="10" left="10"/>
-            </BorderPane.margin>
-            <Hyperlink fx:id="patientDataLink" text="Patient Data" onAction="#switchToPatientData"/>
-            <Hyperlink fx:id="patientRegistrationLink" text="Register New Patient" onAction="#switchToPatientRegistration"/>
-        </VBox>
-
-    </left>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.nirvan.controller.MainController"
+            stylesheets="/css/styles.css"
+>
+    <children>
+        <Pane fx:id="overlay" styleClass="overlay" BorderPane.alignment="CENTER"/>
+    </children>
     <center>
+        <VBox styleClass="center" alignment="CENTER" spacing="20">
+            <!-- Welcome Message -->
+            <Label styleClass="lable" text="Welcome to Nirvan Dental Clinic" BorderPane.alignment="CENTER"/>
 
-
+            <!-- Links below the welcome message -->
+            <HBox styleClass="hbox" prefWidth="800.0" alignment="CENTER">
+                <Button styleClass="button" fx:id="patientDataLink" text="Patient Data" onAction="#switchToPatientData" BorderPane.alignment="CENTER"/>
+                <Button styleClass="button" fx:id="patientRegistrationLink" text="Register New Patient" onAction="#switchToPatientRegistration" BorderPane.alignment="CENTER"/>
+            </HBox>
+        </VBox>
     </center>
 </BorderPane>

@@ -15,13 +15,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -104,6 +107,15 @@ public class PatientTableController {
 
         // Add data to table
         patientTable.setItems(patientData);
+
+        patientTable.setOnMouseClicked(event ->{
+            if(event.getClickCount()==2){
+                Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
+                if(selectedPatient!=null){
+                    showAppointmentHistory(selectedPatient);
+                }
+            }
+        });
     }
 
     public void switchToMain() throws Exception{
@@ -130,6 +142,42 @@ public class PatientTableController {
         // Refresh the table after update
         refreshTable();
     }
+
+    @FXML
+    public void showFilterDialog(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/filterDialog.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and set the patient data for filtering
+            FilterDialogController filterDialogController = loader.getController();
+            filterDialogController.setPatientData(patientData);
+
+            //Show filter dialog
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Filter Patients");
+            dialogStage.setScene(new Scene(root,300,120));
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+            // Apply the filter if criteria are selected
+            ObservableList<Patient> filteredData = filterDialogController.getFilteredData();
+            if(filteredData != null){
+                patientData = filteredData;
+                patientTable.setItems(patientData);
+            }
+
+
+        }catch(IOException exception){
+            exception.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Failed to load filter dialog");
+            alert.setContentText(exception.getMessage());
+            alert.show();
+        }
+    }
+
+
 
     @FXML
     private void handleDelete(){
@@ -213,8 +261,8 @@ public class PatientTableController {
     // Utility method to refresh table data
     @FXML
     private void refreshTable() {
-        patientData.clear();
-        patientData.addAll(patientService.getAllPatients());
+        patientData = FXCollections.observableArrayList(patientService.getAllPatients());
+        patientTable.setItems(patientData);
         searchNameField.setText("");
     }
 
@@ -235,8 +283,65 @@ public class PatientTableController {
                 System.out.println("Export successful: " + file.getAbsolutePath());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Export Failed");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
+    }
+
+    @FXML
+    public void handleImportFromExcel(){
+        try{
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select File to import");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+            File file = fileChooser.showOpenDialog(new Stage());
+
+            if(file!=null){
+                List<Patient> patients = new ExcelService().importPatientsFromExcel(file);
+                patientService.importPatientsFromExcel(patients);
+                showAlert("Import Successful","Patients data imported successfully");
+                System.out.println("Import successful: " + file.getAbsolutePath());
+                refreshTable();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Import Failed");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public ObservableList<Patient> searchByName(String name){
+        ObservableList<Patient> searchList = patientData
+                .filtered(patient -> patient.getName().toLowerCase()
+                        .contains(name.toLowerCase()));
+        return searchList;
+    }
+
+    public void showAppointmentHistory(Patient patient) {
+
+        try{
+            SpringFXMLLoader loader = JavaFxApplication.springContext.getBean(SpringFXMLLoader.class);
+            FXMLLoader fxmlLoader = loader.loadWithController("/appointmentHistory.fxml");
+
+            AppointmentHistoryController controller = fxmlLoader.getController();
+            controller.setPatient(patient);
+            Parent root = fxmlLoader.getRoot();
+            Stage stage = new Stage();
+            stage.setTitle("Appointment history");
+            Scene scene = new Scene(root, 580, 500);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Opening Appointment History");
+            alert.setContentText(e.getMessage());
+        }
+
     }
 }
 

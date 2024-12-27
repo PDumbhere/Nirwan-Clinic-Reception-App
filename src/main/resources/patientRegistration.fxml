@@ -73,7 +73,21 @@
                     <!-- Treatment -->
                     <HBox spacing="10">
                         <Label text="Treatment:" minWidth="120" />
-                        <TextField fx:id="treatmentField" promptText="Enter treatment details" />
+<!--                        <TextField fx:id="treatmentField" promptText="Enter treatment details" />-->
+                        <ComboBox fx:id="treatmentField" promptText="Select type" value="Consultation">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Consultation"/>
+                                    <String fx:value="Root Canal"/>
+                                    <String fx:value="Crown"/>
+                                    <String fx:value="Implant"/>
+                                    <String fx:value="Scaling"/>
+                                    <String fx:value="Ortho"/>
+                                    <String fx:value="Extraction"/>
+                                    <String fx:value="Other"/>
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
                     </HBox>
 
                     <!-- Contact -->
@@ -87,6 +101,8 @@
                         <Label text="Address:" minWidth="120" />
                         <TextField fx:id="addressField" promptText="Enter address" />
                     </HBox>
+
+                    <TextField fx:id = "registeredDateTime" visible="false"/>
 
                     <!-- Save Button -->
                     <Button text="Save" fx:id="saveButton" onAction="#handleSave" style="-fx-font-size: 14px;" />

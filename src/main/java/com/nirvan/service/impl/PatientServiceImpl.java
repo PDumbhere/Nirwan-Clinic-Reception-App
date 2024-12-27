@@ -6,6 +6,7 @@ import com.nirvan.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,26 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Patient> searchByName(String name) {
         return patientRepository.searchName(name);
+    }
+
+    @Override
+    public boolean importPatientsFromExcel(List<Patient> patients) {
+        List<Patient> saveList = new ArrayList<>();
+        patients.forEach(patient -> {
+            if(patient.getPatientId()==null){
+                saveList.add(patient);
+                return;
+            }
+            Optional<Patient> currentPatientRecord = patientRepository.findByName(patient.getName());
+            if(currentPatientRecord.isPresent()){
+                if(patient.getUpdatedDateTime().isAfter(currentPatientRecord.get().getUpdatedDateTime()))
+                    saveList.add(patient);
+            }else {
+                saveList.add(patient);
+            }
+        });
+        patientRepository.saveAll(saveList);
+        return true;
     }
 
     private boolean verifyPatientEntry(Patient patient){

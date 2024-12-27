@@ -7,12 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tables")
+@Table(name = "patients")
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_seq")
@@ -38,9 +39,20 @@ public class Patient {
 
     private LocalDateTime registrationDateTime;
 
+    private LocalDateTime updatedDateTime;
+
+//    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Appointment> appointments;
+
     @PrePersist
     private void onSave(){
         registrationDateTime = LocalDateTime.now();
+        updatedDateTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void onUpdate(){
+        updatedDateTime = LocalDateTime.now();
     }
 
 }

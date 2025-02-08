@@ -22,7 +22,9 @@ import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +75,16 @@ public class PatientTableController {
         idColumn.setCellValueFactory(cellData ->(new SimpleObjectProperty<>(cellData.getValue().getPatientId()) ));
         nameColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getName()));
         dobColumn.setCellValueFactory(cellData -> {
-            LocalDateTime val = cellData.getValue().getDob();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            String formattedDate = val.format(formatter);
-            return new SimpleObjectProperty<>(formattedDate);
+            LocalDateTime dob = cellData.getValue().getDob();
+            int age = Period.between(dob.toLocalDate(), LocalDate.now()).getYears();
+            return new SimpleObjectProperty<>(String.valueOf(age));
         });
+//        dobColumn.setCellValueFactory(cellData -> {
+//            LocalDateTime val = cellData.getValue().getDob();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//            String formattedDate = val.format(formatter);
+//            return new SimpleObjectProperty<>(formattedDate);
+//        });
         sexColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getSex()));
         typeColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPatientType()));
         treatmentColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTreatment()));

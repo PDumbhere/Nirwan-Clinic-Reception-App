@@ -75,9 +75,9 @@
                                 <PropertyValueFactory property="name" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="dobColumn" text="Date of Birth">
+                        <TableColumn fx:id="dobColumn" text="Age">
                             <cellValueFactory>
-                                <PropertyValueFactory property="dob" />
+                                <PropertyValueFactory property="dobToAge" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn fx:id="sexColumn" text="Sex">
